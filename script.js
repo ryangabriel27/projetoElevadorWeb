@@ -4,17 +4,15 @@
     CompartmentModel = class CompartmentModel {
         constructor() {
             var buttons, floor, me;
-            this.floors = 8;  // Agora são 8 andares (incluindo 2 abaixo do térreo)
+            this.floors = 9;
             this.compartment = [];
             this.compartmentCount = 2;
             me = this;
             buttons = ((function () {
                 var j, upDownButtons;
                 upDownButtons = [];
-                for (floor = j = me.floors; j >= -1; floor = j += -1) {
-                    // Modificado para incluir andares abaixo do térreo
-                    let label = floor >= 0 ? floor : 'T';
-                    upDownButtons.push(`<div id='floor-buttons-${floor}' class='floor-buttons d-flex align-items-center'><div class="floor-number-container d-flex align-items-center justify-content-center"><label class="floor-number-label">${label}</label></div><button class='button upSide' data-floor='${floor}'><div class='upSide'></div></button><button class='button downSide' data-floor='${floor}'><div class='downSide'></div></button></div>`);
+                for (floor = j = me.floors; j >= 1; floor = j += -1) {
+                    upDownButtons.push(``);
                 }
                 return upDownButtons;
             })()).join('');
@@ -44,7 +42,7 @@
                 results = [];
                 for (i = j = 0, len = ref.length; j < len; i = ++j) {
                     compartment = ref[i];
-                    if (!compartment.moving && !compartment.inMaintenance) {
+                    if (!compartment.moving) {
                         results.push([i + 1, Math.abs(floor - compartment.floor)]);
                     }
                 }
@@ -78,12 +76,12 @@
             if (this.compartment[compartment - 1].moving) {
                 return deferred.reject();
             }
-            if (floor < -1 || floor > this.floors) {
+            if (floor < 1 || floor > this.floors) {
                 return deferred.reject();
             }
             this.compartment[compartment - 1].moving = true;
             $(`#lift${compartment} .compartment`).animate({
-                bottom: `${(floor + 1) * 85}px`  // Ajustado para a posição correta dos andares abaixo do térreo
+                bottom: `${(floor - 1) * 87}px`
             }, {
                 duration: 300 * Math.abs(myCompartment[compartment - 1].floor - floor),
                 easing: 'linear',
@@ -94,33 +92,28 @@
                 }
             }).delay(50);
             $(`#lift${compartment} .compartment > div`).animate({
-                top: `${-425 + (floor + 1) * 85}px`  // Ajustado para a posição correta dos andares abaixo do térreo
+                top: `${-425 + floor * 85}px`
             }, {
                 duration: 300 * Math.abs(myCompartment[compartment - 1].floor - floor),
                 easing: 'linear'
             }).delay(50);
             return deferred;
         }
+
     };
 
-    view = new CompartmentModel();  // Instância da classe CompartmentModel
+    view = new CompartmentModel();
     for (let i = 0; i < view.compartmentCount; i++) {
         view.compartment.push({
-            floor: 0,  // Inicia no andar "T" (térreo)
-            moving: false,
-            inMaintenance: false,
+            floor: 0,
+            moving: false
         });
+        let count = i;
+        dynamicCompartment = `<div id = "lift${count + 1}" class="elevator col d-flex justify-content-center"><div class="compartment"><div><div>6</div><div>5</div><div>4</div><div>3</div><div>2</div><div>1</div><div>T</div><div>S1</div><div>S2</div></div></div></div >`;
 
-        // Criação dinâmica dos compartimentos do elevador
-        let dynamicCompartment = `<div id="lift${i + 1}" class="elevator col d-flex justify-content-center"><div class="compartment"><div>`;
-        for (let floor = view.floors; floor >= -1; floor--) {
-            dynamicCompartment += `<div>${floor >= 0 ? floor : 'T'}</div>`;
-        }
-        dynamicCompartment += `</div></div></div>`;
         $('#elevators').prepend(dynamicCompartment);
     }
 
-   
     $(view).on('pressed', function (e, { floor, dir }) {
         return view.moveCompartment(view.closestIdleCompartment(floor), floor).then(function () {
             return view.clearButton(floor, dir);

@@ -36,7 +36,7 @@ main {
     margin: 0 8px;
     background-color: #b1e2ff;
     width: 50px;
-    height: 429.6px;
+    height: 90vh;
     top: 0px;
     text-align: center;
     font-size: 24pt;
@@ -45,8 +45,8 @@ main {
 .compartment {
     position: absolute;
     bottom: 0px;
-    background-color: #71797E;
-    height: 85px;
+    background-color: #40474b;
+    height: 87px;
     font-size: 12pt;
     color: #ffffff;
     font-weight: 500;
@@ -67,7 +67,7 @@ main {
 
 #upDownButtons {
     position: relative;
-    height: 366px;
+    height: 500px;
     padding: 0;
     margin: 0;
 }
@@ -106,24 +106,6 @@ main {
     border-bottom: 9px solid #ffffff;
 }
 
-.button>.downSide {
-    height: 0;
-    border-left: 8.5px solid transparent;
-    border-right: 8.5px solid transparent;
-    border-top: 9px solid white;
-}
-
-.button:hover .downSide {
-    border-top: 9px solid #26253d;
-}
-
-#floor-buttons-1 button.button.downSide {
-    display: none;
-}
-
-#floor-buttons-5 button.button.upSide {
-    display: none;
-}
 
 .floor-number-container {
     border: none;
