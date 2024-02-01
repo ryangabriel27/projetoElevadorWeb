@@ -101,8 +101,9 @@
                 return deferred.reject();
             }
             this.compartment[compartment - 1].moving = true;
+            
             $(`#lift${compartment} .compartment`).animate({
-                bottom: `${(floor - 1) * 85}px`
+                bottom: `${(floor - 1) * 50}px`
             }, {
                 duration: 300 * Math.abs(myCompartment[compartment - 1].floor - floor),
                 easing: 'linear',
@@ -113,7 +114,7 @@
                 }
             }).delay(50);
             $(`#lift${compartment} .compartment > div`).animate({
-                top: `${-425 + floor * 85}px`
+                top: `${-425 + floor * 50}px`
             }, {
                 duration: 300 * Math.abs(myCompartment[compartment - 1].floor - floor),
                 easing: 'linear'
@@ -130,7 +131,8 @@
             moving: false
         });
         let count = i;
-        dynamicCompartment = `<div id = "lift${count + 1}" class="elevator col d-flex justify-content-center"><div class="compartment"></div >`;
+        dynamicCompartment = `<div id = "lift${count + 1}" class="elevator col d-flex justify-content-center"><div class="compartment">
+        <img src='./img/portaFechada.png' alt='imagem' class='compartment-image'/></div >`;
         $('#elevators').prepend(dynamicCompartment);
     }
 
