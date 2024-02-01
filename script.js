@@ -12,7 +12,17 @@
                 var j, upDownButtons;
                 upDownButtons = [];
                 for (floor = j = me.floors; j >= 1; floor = j += -1) {
-                    upDownButtons.push(``);
+                    if (floor == 1) {
+                        upDownButtons.push(`<div id = 'floor-buttons-${floor}' class='floor-buttons d-flex align-items-center'><div class="floor-number-container d-flex align-items-center justify-content-center"><label class="floor-number-label">S1</label></div><button class='button upSide' data-floor='${floor}'><div class='upSide'><img src='./img/botaoNormal.png' class='button-image' alt='botao'/></div></button></div>`);
+                    } else if (floor == 2) {
+                        upDownButtons.push(`<div id = 'floor-buttons-${floor}' class='floor-buttons d-flex align-items-center'><div class="floor-number-container d-flex align-items-center justify-content-center"><label class="floor-number-label">S2</label></div><button class='button upSide' data-floor='${floor}'><div class='upSide'><img src='./img/botaoNormal.png' class='button-image' alt='botao'/></div></button></div>`);
+
+                    } else if (floor == 3) {
+                        upDownButtons.push(`<div id = 'floor-buttons-${floor}' class='floor-buttons d-flex align-items-center'><div class="floor-number-container d-flex align-items-center justify-content-center"><label class="floor-number-label">T</label></div><button class='button upSide' data-floor='${floor}'><div class='upSide'><img src='./img/botaoNormal.png' class='button-image' alt='botao'/></div></button></div>`);
+
+                    } else {
+                        upDownButtons.push(`<div id = 'floor-buttons-${floor}' class='floor-buttons d-flex align-items-center'><div class="floor-number-container d-flex align-items-center justify-content-center"><label class="floor-number-label">${floor - 3}</label></div><button class='button upSide' data-floor='${floor}'><div class='upSide'><img src='./img/botaoNormal.png' class='button-image' alt='botao'/></div></button></div>`);
+                    }
                 }
                 return upDownButtons;
             })()).join('');
@@ -20,7 +30,18 @@
                 if ($(this).hasClass('on')) {
                     return;
                 }
-                $(this).toggleClass('on');
+                var button = $(this);
+                var buttonImage = button.find('.button-image');
+
+                // Troque a imagem quando o botão for clicado
+                buttonImage.attr('src', './img/botaoApertado.png');  // Substitua 'novaImagemClicada.png' pelo caminho da nova imagem
+
+                button.toggleClass('on');
+
+                setTimeout(function () {
+                    // Volte à imagem original após um intervalo de tempo (por exemplo, 1000 milissegundos = 1 segundo)
+                    buttonImage.attr('src', './img/botaoNormal.png');
+                }, 800);  // Ajuste o intervalo de tempo conforme necessário (1000 milissegundos = 1 segundo)
                 return $(me).trigger('pressed', [
                     {
                         floor: parseInt($(this)[0].dataset.floor),
@@ -42,7 +63,7 @@
                 results = [];
                 for (i = j = 0, len = ref.length; j < len; i = ++j) {
                     compartment = ref[i];
-                    if (!compartment.moving) {
+                    if (!compartment.moving && !compartment.inMaintenance) {
                         results.push([i + 1, Math.abs(floor - compartment.floor)]);
                     }
                 }
@@ -81,7 +102,7 @@
             }
             this.compartment[compartment - 1].moving = true;
             $(`#lift${compartment} .compartment`).animate({
-                bottom: `${(floor - 1) * 87}px`
+                bottom: `${(floor - 1) * 85}px`
             }, {
                 duration: 300 * Math.abs(myCompartment[compartment - 1].floor - floor),
                 easing: 'linear',
@@ -105,12 +126,11 @@
     view = new CompartmentModel();
     for (let i = 0; i < view.compartmentCount; i++) {
         view.compartment.push({
-            floor: 0,
+            floor: 1,
             moving: false
         });
         let count = i;
-        dynamicCompartment = `<div id = "lift${count + 1}" class="elevator col d-flex justify-content-center"><div class="compartment"><div><div>6</div><div>5</div><div>4</div><div>3</div><div>2</div><div>1</div><div>T</div><div>S1</div><div>S2</div></div></div></div >`;
-
+        dynamicCompartment = `<div id = "lift${count + 1}" class="elevator col d-flex justify-content-center"><div class="compartment"></div >`;
         $('#elevators').prepend(dynamicCompartment);
     }
 
@@ -119,4 +139,5 @@
             return view.clearButton(floor, dir);
         });
     });
+
 }).call(this);

@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
+
 body {
-    background-color: #006266;
+    background-image: url(./img/cenario.jpg);
 }
 
 .bd-placeholder-img {
@@ -18,10 +20,11 @@ body {
 
 main {
     display: flex;
-    width: 100%;
     justify-content: center;
     flex-direction: column;
-    margin-top: 10em;
+    margin-top: 5em;
+    margin-left: 8em;
+
 }
 
 #dynamicCompartment {
@@ -34,9 +37,9 @@ main {
 .elevator {
     position: relative;
     margin: 0 8px;
-    background-color: #b1e2ff;
+    background-color: #191a1b;
     width: 50px;
-    height: 90vh;
+    height: 780px;
     top: 0px;
     text-align: center;
     font-size: 24pt;
@@ -84,40 +87,43 @@ main {
 .button {
     border: none;
     border-radius: 50%;
+    background-color: #006266;
     height: 30px;
     width: 30px;
-    background-color: #26253d;
     cursor: pointer;
     margin-right: 10px;
 }
 
 .button:hover {
     background-color: #b1e2ff;
+    border: 1px;
 }
 
-.button:hover .upSide {
-    border-bottom: 9px solid #26253d;
+.button:hover .upSide {}
+
+.upSide img {
+    max-width: 150%;
+    height: 100%;
 }
 
-.button>.upSide {
-    height: 0;
-    border-left: 8.5px solid transparent;
-    border-right: 8.5px solid transparent;
-    border-bottom: 9px solid #ffffff;
+.upSide {
+    justify-content: center;
+    align-items: center;
+    display: flex;
 }
-
 
 .floor-number-container {
     border: none;
-    border-radius: 50%;
+    box-shadow: 8px 7px 44px 38px rgba(0,0,0,0.1);
     height: 30px;
     width: 30px;
-    background-color: #26253d;
     margin-right: 10px;
 }
 
 .floor-number-label {
+    font-size: 20px;
     color: rgb(255, 255, 255);
+    font-family: 'Archivo Black', sans-serif;
 }
 
 .cursor-pointer {
