@@ -1,145 +1,123 @@
-(function () {
-    var CompartmentModel, view;
+// Definição do primeiro elevador com o andar atual, ID de exibição e estado inicial da porta
+let elevador1 = {
+    andarAtual: 1,
+    displayId: 'lift-1',
+    portaAberta: true
+}
 
-    CompartmentModel = class CompartmentModel {
-        constructor() {
-            var buttons, floor, me;
-            this.floors = 9;
-            this.compartment = [];
-            this.compartmentCount = 2;
-            me = this;
-            buttons = ((function () {
-                var j, upDownButtons;
-                upDownButtons = [];
-                for (floor = j = me.floors; j >= 1; floor = j += -1) {
-                    if (floor == 1) {
-                        upDownButtons.push(`<div id = 'floor-buttons-${floor}' class='floor-buttons d-flex align-items-center'><div class="floor-number-container d-flex align-items-center justify-content-center"><label class="floor-number-label">S1</label></div><button class='button upSide' data-floor='${floor}'><div class='upSide'><img src='./img/botaoNormal.png' class='button-image' alt='botao'/></div></button></div>`);
-                    } else if (floor == 2) {
-                        upDownButtons.push(`<div id = 'floor-buttons-${floor}' class='floor-buttons d-flex align-items-center'><div class="floor-number-container d-flex align-items-center justify-content-center"><label class="floor-number-label">S2</label></div><button class='button upSide' data-floor='${floor}'><div class='upSide'><img src='./img/botaoNormal.png' class='button-image' alt='botao'/></div></button></div>`);
+// Definição do segundo elevador com o andar atual, ID de exibição e estado inicial da porta
+let elevador2 = {
+    andarAtual: 1,
+    displayId: 'lift-2',
+    portaAberta: true
+}
 
-                    } else if (floor == 3) {
-                        upDownButtons.push(`<div id = 'floor-buttons-${floor}' class='floor-buttons d-flex align-items-center'><div class="floor-number-container d-flex align-items-center justify-content-center"><label class="floor-number-label">T</label></div><button class='button upSide' data-floor='${floor}'><div class='upSide'><img src='./img/botaoNormal.png' class='button-image' alt='botao'/></div></button></div>`);
+// Função para chamar um elevador para um determinado andar
+function chamarElevador(andar) {
+    // Verifica qual elevador está mais próximo do andar chamado
+    let verificaElevadorProx = procuraElevadorProximo(andar);
 
-                    } else {
-                        upDownButtons.push(`<div id = 'floor-buttons-${floor}' class='floor-buttons d-flex align-items-center'><div class="floor-number-container d-flex align-items-center justify-content-center"><label class="floor-number-label">${floor - 3}</label></div><button class='button upSide' data-floor='${floor}'><div class='upSide'><img src='./img/botaoNormal.png' class='button-image' alt='botao'/></div></button></div>`);
-                    }
-                }
-                return upDownButtons;
-            })()).join('');
-            $('#upDownButtons').empty().append($(buttons)).off('click').on('click', 'button', function () {
-                if ($(this).hasClass('on')) {
-                    return;
-                }
-                var button = $(this);
-                var buttonImage = button.find('.button-image');
+    // Move o elevador escolhido para o andar chamado
+    if (verificaElevadorProx === elevador1) {
+        moverElevador(elevador1, andar);
+        botaoPressionado('button-image-' + andar, './img/botaoApertado.png');
+        setTimeout(function () {
+            console.log('executa')
+            resetBotao('button-image-' + andar, './img/botaoNormal.png');
+        }, 800);
+    } else if (verificaElevadorProx === elevador2) {
+        moverElevador(elevador2, andar);
+    }
+}
 
-                // Troque a imagem quando o botão for clicado
-                buttonImage.attr('src', './img/botaoApertado.png');  // Substitua 'novaImagemClicada.png' pelo caminho da nova imagem
+// Função para determinar qual elevador está mais próximo do andar chamado
+function procuraElevadorProximo(andar) {
+    let distance1 = Math.abs(elevador1.andarAtual - andar);
+    let distance2 = Math.abs(elevador2.andarAtual - andar);
 
-                button.toggleClass('on');
+    return distance1 <= distance2 ? elevador1 : elevador2;
+}
 
-                setTimeout(function () {
-                    // Volte à imagem original após um intervalo de tempo (por exemplo, 1000 milissegundos = 1 segundo)
-                    buttonImage.attr('src', './img/botaoNormal.png');
-                }, 800);  // Ajuste o intervalo de tempo conforme necessário (1000 milissegundos = 1 segundo)
-                return $(me).trigger('pressed', [
-                    {
-                        floor: parseInt($(this)[0].dataset.floor),
-                        dir: $(this).children().hasClass('upSide') ? 'upSide' : 'downSide'
-                    }
-                ]);
-            });
-        }
+// Função para mover o elevador para um determinado andar
+function moverElevador(elevador, andar) {
+    console.log(`Elevador ${elevador.displayId} saindo do andar ${elevador.andarAtual} para ${andar}`);
 
-        clearButton(floor, dir) {
-            return $(`#floor-buttons-${floor} > button > div.${dir}`).parent().removeClass('on');
-        }
-
-        closestIdleCompartment(floor) {
-            var a, compartment, closest, i, lowest, nonmoving;
-            nonmoving = (function () {
-                var j, len, ref, results;
-                ref = this.compartment;
-                results = [];
-                for (i = j = 0, len = ref.length; j < len; i = ++j) {
-                    compartment = ref[i];
-                    if (!compartment.moving && !compartment.inMaintenance) {
-                        results.push([i + 1, Math.abs(floor - compartment.floor)]);
-                    }
-                }
-                return results;
-            }).call(this);
-            closest = nonmoving.reduce(function (a, b) {
-                if (a[1] <= b[1]) {
-                    return a;
-                } else {
-                    return b;
-                }
-            });
-            lowest = (function () {
-                var j, len, results;
-                results = [];
-                for (j = 0, len = nonmoving.length; j < len; j++) {
-                    a = nonmoving[j];
-                    if (a[1] === closest[1]) {
-                        results.push(a[0]);
-                    }
-                }
-                return results;
-            })();
-            return lowest[Math.floor(Math.random() * lowest.length)];
-        }
-
-        moveCompartment(compartment, floor) {
-            var deferred, myCompartment;
-            myCompartment = this.compartment;
-            deferred = $.Deferred();
-            if (this.compartment[compartment - 1].moving) {
-                return deferred.reject();
-            }
-            if (floor < 1 || floor > this.floors) {
-                return deferred.reject();
-            }
-            this.compartment[compartment - 1].moving = true;
-            
-            $(`#lift${compartment} .compartment`).animate({
-                bottom: `${(floor - 1) * 50}px`
-            }, {
-                duration: 300 * Math.abs(myCompartment[compartment - 1].floor - floor),
-                easing: 'linear',
-                complete: function () {
-                    myCompartment[compartment - 1].floor = floor;
-                    myCompartment[compartment - 1].moving = false;
-                    return deferred.resolve();
-                }
-            }).delay(50);
-            $(`#lift${compartment} .compartment > div`).animate({
-                top: `${-425 + floor * 50}px`
-            }, {
-                duration: 300 * Math.abs(myCompartment[compartment - 1].floor - floor),
-                easing: 'linear'
-            }).delay(50);
-            return deferred;
-        }
-
-    };
-
-    view = new CompartmentModel();
-    for (let i = 0; i < view.compartmentCount; i++) {
-        view.compartment.push({
-            floor: 1,
-            moving: false
-        });
-        let count = i;
-        dynamicCompartment = `<div id = "lift${count + 1}" class="elevator col d-flex justify-content-center"><div class="compartment">
-        <img src='./img/portaFechada.png' alt='imagem' class='compartment-image'/></div >`;
-        $('#elevators').prepend(dynamicCompartment);
+    // Verifica se o elevador já está em movimento
+    if (elevador.moving) {
+        return $.Deferred().reject();
     }
 
-    $(view).on('pressed', function (e, { floor, dir }) {
-        return view.moveCompartment(view.closestIdleCompartment(floor), floor).then(function () {
-            return view.clearButton(floor, dir);
-        });
-    });
+    // Verifica se o andar chamado é válido
+    if (andar < 1 || andar > 9) {
+        return $.Deferred().reject();
+    }
 
-}).call(this);
+    // Abre a porta quando o elevador começa a se mover
+    abrirPorta(elevador);
+
+    // Marca o elevador como em movimento
+    elevador.moving = true;
+
+    // Animação de movimento vertical do elevador
+    $(`#${elevador.displayId} .elevador`).animate({
+        bottom: `${(andar - 1) * 50}px`
+    }, {
+        duration: 300 * Math.abs(elevador.andarAtual - andar),
+        easing: 'linear',
+        complete: function () {
+            // Atualiza o andar atual do elevador
+            elevador.andarAtual = andar;
+            // Marca o elevador como parado
+            elevador.moving = false;
+
+            // Fecha a porta quando o elevador para
+            fecharPorta(elevador);
+        }
+    }).delay(50);
+
+    // Animação de movimento vertical da porta do elevador
+    $(`#${elevador.displayId} .elevador > div`).animate({
+        top: `${-425 + andar * 50}px`
+    }, {
+        duration: 300 * Math.abs(elevador.andarAtual - andar),
+        easing: 'linear'
+    }).delay(50);
+
+    return $.Deferred().resolve();
+}
+
+// Função para atualizar a exibição do andar atual do elevador
+function atualizaAndar(elevador) {
+    document.getElementById(elevador.displayId).innerText = elevador.andarAtual;
+}
+
+// Função para alterar a imagem de um botão quando pressionado
+function botaoPressionado(id, novaImg) {
+    document.getElementById(id).src = novaImg;
+}
+
+// Função para redefinir a imagem de um botão
+function resetBotao(id, img) {
+    document.getElementById(id).src = img;
+}
+
+// Função para abrir a porta do elevador
+function abrirPorta(elevador) {
+    elevador.portaAberta = true;
+    atualizarPorta(elevador);
+}
+
+// Função para fechar a porta do elevador
+function fecharPorta(elevador) {
+    elevador.portaAberta = false;
+    atualizarPorta(elevador);
+}
+
+// Função para atualizar a exibição da porta do elevador
+function atualizarPorta(elevador) {
+    // Determina a imagem da porta com base no estado da porta
+    var portaImage = elevador.portaAberta ? './img/portaFechada.png' : './img/portaAberta.png';
+
+    // Atualiza a imagem da porta no HTML
+    $(`#${elevador.displayId} .elevador-image`).attr('src', portaImage);
+}

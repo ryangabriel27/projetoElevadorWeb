@@ -1,99 +1,65 @@
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Orbitron&display=swap');
 
-body {}
 
-.bd-placeholder-img {
-    font-size: 1.125rem;
-    text-anchor: middle;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    user-select: none;
+body{
+    background-color: rgb(37, 38, 38);
+    margin: 0;
 }
 
-@media (min-width: 768px) {
-    .bd-placeholder-img-lg {
-        font-size: 3.5rem;
-    }
+header{
+    background-color: #e6e6e6;
+    display: flex;
+    justify-content: center;
+    font-family: 'Orbitron', sans-serif;
 }
 
-.background {
-    width: 80%;
-    height: 100%;
-    background-color: aquamarine;
-}
-
-main {
+.main {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    margin-top: 5em;
-    margin-left: 8em;
     height: 100vh;
+    background-repeat: no-repeat;
 }
 
-#dynamicCompartment {
-    position: relative;
-    height: 429.6px;
-    margin: 25px 0 25px 0;
-    padding: 0;
+.elevators-body{
+    background-color: rgb(230, 228, 228);
+    border: 8px solid rgb(230, 228, 228);
+    border-radius: 4px;
 }
 
 .elevator {
     position: relative;
     margin: 0 8px;
-    background-color: #191a1b;
+    background-color: #afafaf;
     width: 50px;
     height: 450px;
     top: 0px;
-    text-align: center;
-    font-size: 24pt;
+    border-radius: 8px;
 }
 
-.compartment {
+.elevador {
     position: absolute;
     bottom: 0px;
-    background-color: #40474b;
     height: 50px;
-    font-size: 12pt;
-    color: #ffffff;
-    font-weight: 500;
-    overflow: hidden;
     width: 50%;
 }
 
-.compartment img{
+.elevador img {
     max-width: 100%;
     height: 100%;
 }
 
-
-.compartment>div {
-    position: relative;
-    top: -340px;
-}
-
-.compartment>div>div {
-    position: relative;
-    height: 85px;
-}
-
-#upDownButtons {
-    position: relative;
-    height: 500px;
-    padding: 0;
-    margin: 0;
+.botoes-elevador {
+    background-color: #454545;
+    border-radius: 10px;
+    box-shadow: 4px 7px 8px 10px rgba(0, 0, 0, 0.1);
 }
 
 .floor-buttons {
     height: 50px;
-    background-color: #6e7173;
-    width: 80px;
+    width: 90px;
 }
 
-.span-floor {
-    margin-left: 50px;
-    color: white;
-}
 
 .button {
     border: none;
@@ -110,7 +76,7 @@ main {
     border: 1px;
 }
 
-.elevator-btn img{
+.elevator-btn img {
     max-width: 100%;
     height: 100%;
 }
@@ -129,8 +95,8 @@ main {
 .floor-number-container {
     background-color: #191a1b;
     border-radius: 5px;
-    height: 20px;
-    width: 30px;
+    height: 25px;
+    width: 50px;
     margin-right: 10px;
     margin-left: 3px;
 }
@@ -139,16 +105,4 @@ main {
     font-size: 15px;
     color: rgb(66, 239, 103);
     font-family: 'Orbitron', sans-serif;
-}
-
-.cursor-pointer {
-    cursor: pointer;
-}
-
-.color-white {
-    color: white;
-}
-
-.font-weight-500 {
-    font-weight: 500;
 }
