@@ -1,13 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
-    <title>Elevator System</title>
-
-    <!-- Bootstrap core CSS -->
+    <title>Elevador</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <!-- Custom styles -->
     <link href="style.css" rel="stylesheet" />
 </head>
 
@@ -20,86 +17,86 @@
             <div class="row d-flex justify-content-center">
                 <div class="col-9 elevador-body align-items-center">
                     <div id="elevadores" class="row mt-4">
-                        <div id="lift-1" class="elevator col d-flex justify-content-center">
+                        <div id="elevador-1" class="elevator col d-flex justify-content-center">
                             <div class="elevador">
                                 <img src='./img/portaAberta.png' alt='imagem' class='elevador-image' />
                             </div>
                         </div>
-                        <div id="lift-2" class="elevator col d-flex justify-content-center">
+                        <div id="elevador-2" class="elevator col d-flex justify-content-center">
                             <div class="elevador">
                                 <img src='./img/portaAberta.png' alt='imagem' class='elevador-image' />
                             </div>
                         </div>
                         <div class="botoes-elevador col">
-                            <div id='floor-buttons-3' class='floor-buttons d-flex align-items-center'>
+                            <div id='andarNumero' class='andares d-flex align-items-center'>
                                 <div class="floor-number-container d-flex align-items-center justify-content-center">
                                     <label class="floor-number-label">6</label>
-                                </div><button class='button upSide' onclick="chamarElevador(9)">
-                                    <div class='upSide'><img src='./img/botaoNormal.png' id='button-image-9'
+                                </div><button class='button subir' onclick="chamarElevador(9)">
+                                    <div class='subir'><img src='./img/botaoNormal.png' id='button-image-9'
                                             alt='botao' /></div>
                                 </button>
                             </div>
-                            <div id='floor-buttons-3' class='floor-buttons d-flex align-items-center'>
+                            <div id='andarNumero' class='andares d-flex align-items-center'>
                                 <div class="floor-number-container d-flex align-items-center justify-content-center">
                                     <label class="floor-number-label">5</label>
-                                </div><button class='button upSide' onclick="chamarElevador(8)">
-                                    <div class='upSide'><img src='./img/botaoNormal.png' id='button-image-8'
+                                </div><button class='button subir' onclick="chamarElevador(8)">
+                                    <div class='subir'><img src='./img/botaoNormal.png' id='button-image-8'
                                             alt='botao' /></div>
                                 </button>
                             </div>
-                            <div id='floor-buttons-3' class='floor-buttons d-flex align-items-center'>
+                            <div id='andarNumero' class='andares d-flex align-items-center'>
                                 <div class="floor-number-container d-flex align-items-center justify-content-center">
                                     <label class="floor-number-label">4</label>
-                                </div><button class='button upSide' onclick="chamarElevador(7)">
-                                    <div class='upSide'><img src='./img/botaoNormal.png' id='button-image-7'
+                                </div><button class='button subir' onclick="chamarElevador(7)">
+                                    <div class='subir'><img src='./img/botaoNormal.png' id='button-image-7'
                                             alt='botao' /></div>
                                 </button>
                             </div>
-                            <div id='floor-buttons-3' class='floor-buttons d-flex align-items-center'>
+                            <div id='andarNumero' class='andares d-flex align-items-center'>
                                 <div class="floor-number-container d-flex align-items-center justify-content-center">
                                     <label class="floor-number-label">3</label>
-                                </div><button class='button upSide' onclick="chamarElevador(6)">
-                                    <div class='upSide'><img src='./img/botaoNormal.png' id='button-image-6'
+                                </div><button class='button subir' onclick="chamarElevador(6)">
+                                    <div class='subir'><img src='./img/botaoNormal.png' id='button-image-6'
                                             alt='botao' /></div>
                                 </button>
                             </div>
-                            <div id='floor-buttons-3' class='floor-buttons d-flex align-items-center'>
+                            <div id='andarNumero' class='andares d-flex align-items-center'>
                                 <div class="floor-number-container d-flex align-items-center justify-content-center">
                                     <label class="floor-number-label">2</label>
-                                </div><button class='button upSide' onclick="chamarElevador(5)">
-                                    <div class='upSide'><img src='./img/botaoNormal.png' id='button-image-5'
+                                </div><button class='button subir' onclick="chamarElevador(5)">
+                                    <div class='subir'><img src='./img/botaoNormal.png' id='button-image-5'
                                             alt='botao' /></div>
                                 </button>
                             </div>
-                            <div id='floor-buttons-3' class='floor-buttons d-flex align-items-center'>
+                            <div id='andarNumero' class='andares d-flex align-items-center'>
                                 <div class="floor-number-container d-flex align-items-center justify-content-center">
                                     <label class="floor-number-label">1</label>
-                                </div><button class='button upSide' onclick="chamarElevador(4)">
-                                    <div class='upSide'><img src='./img/botaoNormal.png' id='button-image-4'
+                                </div><button class='button subir' onclick="chamarElevador(4)">
+                                    <div class='subir'><img src='./img/botaoNormal.png' id='button-image-4'
                                             alt='botao' /></div>
                                 </button>
                             </div>
-                            <div id='floor-buttons-3' class='floor-buttons d-flex align-items-center'>
+                            <div id='andarNumero' class='andares d-flex align-items-center'>
                                 <div class="floor-number-container d-flex align-items-center justify-content-center">
                                     <label class="floor-number-label">T</label>
-                                </div><button class='button upSide' onclick="chamarElevador(3)">
-                                    <div class='upSide'><img src='./img/botaoNormal.png' id='button-image-3'
+                                </div><button class='button subir' onclick="chamarElevador(3)">
+                                    <div class='subir'><img src='./img/botaoNormal.png' id='button-image-3'
                                             alt='botao' /></div>
                                 </button>
                             </div>
-                            <div id='floor-buttons-2' class='floor-buttons d-flex align-items-center'>
+                            <div id='andarNumero' class='andares d-flex align-items-center'>
                                 <div class="floor-number-container d-flex align-items-center justify-content-center">
                                     <label class="floor-number-label">S2</label>
-                                </div><button class='button upSide' onclick="chamarElevador(2)">
-                                    <div class='upSide'><img src='./img/botaoNormal.png' id='button-image-2'
+                                </div><button class='button subir' onclick="chamarElevador(2)">
+                                    <div class='subir'><img src='./img/botaoNormal.png' id='button-image-2'
                                             alt='botao' /></div>
                                 </button>
                             </div>
-                            <div id='floor-buttons-1' class='floor-buttons d-flex align-items-center'>
+                            <div id='andarNumero' class='andares d-flex align-items-center'>
                                 <div class="floor-number-container d-flex align-items-center justify-content-center">
                                     <label class="floor-number-label">S1</label>
-                                </div><button class='button upSide' onclick="chamarElevador(1)">
-                                    <div class='upSide'>
+                                </div><button class='button subir' onclick="chamarElevador(1)">
+                                    <div class='subir'>
                                         <img src='./img/botaoNormal.png' id='button-image-1' alt='botao' />
                                     </div>
                                 </button>
@@ -115,9 +112,10 @@
 
 
 </body>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
     crossorigin="anonymous"></script>
-    <script src="jquery-3.6.0.min.js"></script>
-    <script src="script.js"></script>
+<script src="jquery-3.6.0.min.js"></script>
+<script src="script.js"></script>
+
 </html>

@@ -55,7 +55,7 @@ header{
     box-shadow: 4px 7px 8px 10px rgba(0, 0, 0, 0.1);
 }
 
-.floor-buttons {
+.andares {
     height: 50px;
     width: 90px;
 }
@@ -81,12 +81,12 @@ header{
     height: 100%;
 }
 
-.upSide img {
+.subir img {
     max-width: 150%;
     height: 100%;
 }
 
-.upSide {
+.subir {
     justify-content: center;
     align-items: center;
     display: flex;

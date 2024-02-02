@@ -1,14 +1,14 @@
 // Definição do primeiro elevador com o andar atual, ID de exibição e estado inicial da porta
 let elevador1 = {
     andarAtual: 1,
-    displayId: 'lift-1',
+    displayId: 'elevador-1',
     portaAberta: true
 }
 
 // Definição do segundo elevador com o andar atual, ID de exibição e estado inicial da porta
 let elevador2 = {
     andarAtual: 1,
-    displayId: 'lift-2',
+    displayId: 'elevador-2',
     portaAberta: true
 }
 
